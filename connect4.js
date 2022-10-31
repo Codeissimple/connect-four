@@ -56,17 +56,29 @@ function makeHtmlBoard() {
 }
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
-
-function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
-  return 0;
+// TODO: write the real version of this, rather than always returning 0
+findSpotForCol(x) {
+  for (let y = this.height - 1; y >= 0; y--) {
+    if (!this.board[y][x]) {
+      return y;
+    }
+  }
+  return null;
 }
-
 /** placeInTable: update DOM to place piece into HTML table of board */
+// TODO: make a div and insert into correct table cell
 
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
-}
+  let newDiv = document.createElement('div');
+  newDiv.classList.add('piece');
+  if(currPlayer == 1) {
+    newDiv.classList.add('one');
+  }
+  else if(currPlayer == 2) {
+    newDiv,classList.add('two');
+  };
+
+};
 
 /** endGame: announce game end */
 
