@@ -20,8 +20,8 @@ var board = []; // array of rows, each row is array of cells  (board[y][x])
 function makeBoard() {
   for (let i = 0; i < HEIGHT; i++) {
       board[i] = Array(WIDTH).fill(null); // create a new array each time
-  }
-}
+  };
+};
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
@@ -57,27 +57,32 @@ function makeHtmlBoard() {
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 // TODO: write the real version of this, rather than always returning 0
-findSpotForCol(x) {
-  for (let y = this.height - 1; y >= 0; y--) {
-    if (!this.board[y][x]) {
-      return y;
+  function findSpotForCol(x) {
+    //if the top of the column is filled we return null as column is full
+    if (board[0][x]) {
+      return null;
     }
+    //we check the coloumn from top to bottom to find first filled piece, if we find the filled piece we return the piece above it
+    for (let y = 0; y < HEIGHT; y++) {
+      if (board[y][x] !== null) return y - 1;
+    }
+    //if the whole column is empty then we return bottom row
+    return 5;
   }
-  return null;
-}
 /** placeInTable: update DOM to place piece into HTML table of board */
 // TODO: make a div and insert into correct table cell
 
 function placeInTable(y, x) {
-  let newDiv = document.createElement('div');
-  newDiv.classList.add('piece');
+  let piece = document.createElement('div');
+  piece.classList.add('piece');
   if(currPlayer == 1) {
-    newDiv.classList.add('one');
+    piece.classList.add('player1');
   }
   else if(currPlayer == 2) {
-    newDiv,classList.add('two');
+    piece.classList.add('player2');
   };
-
+  let pieceInsert = document.getElementById(`${y}-${x}`);
+  pieceInsert.append(piece)
 };
 
 /** endGame: announce game end */
@@ -111,22 +116,13 @@ function handleClick(evt) {
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
 
-  let gameTie = true;
-  let pieceCounter = 0;
-  for(let i=0; i< WIDTH; i++ ){
-    for(let j=0; j< HEIGHT; j++){
-      console.log(board[j][i]);
-      if(board[j][i]){
-        
-        pieceCounter++;
-
-      }
-    }
-    }
-
+  if (board.every(row => row.every(cell => cell))) {
+    return endGame('Tie!');
+  };
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  currPlayer = currPlayer === 1 ? 2 : 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
