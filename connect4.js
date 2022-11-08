@@ -74,12 +74,11 @@ function makeHtmlBoard() {
 
 function placeInTable(y, x) {
   let piece = document.createElement('div');
-  
   piece.classList.add('piece');
+  
   if(currPlayer == 1) {
     piece.classList.add('player1');
-  }
-  else if(currPlayer == 2) {
+  } else {
     piece.classList.add('player2');
   };
   let pieceInsert = document.getElementById(`${y}-${x}`);
